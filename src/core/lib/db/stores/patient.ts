@@ -66,7 +66,8 @@ class PatientStore {
 
   async readAll(query?: string): Promise<[Error | null, CreatedPatient[]]> {
     try {
-      const patients = await this.db.find(query ? { userName: `/${query}/` } : {})
+      const patients = await this.db.find(query ? { userName: new RegExp(query) } : {})
+
       return [null, patients]
     } catch (error: any) {
       return [error, []]

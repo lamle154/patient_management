@@ -8,10 +8,8 @@ import { CreatedPatient, Patient } from 'core/lib/db/schema/patient'
 import patientStore from 'core/lib/db/stores/patient'
 import uploadImageService from 'core/services/image'
 import { formatLocalDateTime } from 'core/utils/datetime'
-import { debounce, omit } from 'radash'
+import { omit } from 'radash'
 import React from 'react'
-
-// const fs: FSType = window.require('fs')
 
 function App() {
   const searchValue = React.useRef('')
@@ -49,13 +47,12 @@ function App() {
     [handleFetchPatients]
   )
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleSearch = React.useCallback(
-    debounce({ delay: 300 }, async (value: string) => {
+    async (value: string) => {
       searchValue.current = value
 
-      handleFetchPatients()
-    }),
+      await handleFetchPatients()
+    },
     [handleFetchPatients]
   )
 
