@@ -5,8 +5,8 @@ const path: PathType = window.require('path')
 
 const { app }: ElectronRemoteType = window.require('@electron/remote')
 
-class UploadImageService {
-  private rootDir = app.getAppPath() + '/src/data/patient-images'
+class ImageService {
+  private rootDir = app.getPath('userData') + '/src/data/patient-images'
 
   constructor() {
     this.prepareDir()
@@ -17,7 +17,7 @@ class UploadImageService {
 
     return Array.isArray(files)
       ? await Promise.all(files.map(file => this.copyFile(file, dir)))
-      : await this.copyFile(files, dir)
+      : this.copyFile(files, dir)
   }
 
   files(patientId: string) {
@@ -26,7 +26,7 @@ class UploadImageService {
     return fs.readdirSync(dir).map(file => path.join(dir, file))
   }
 
-  private async copyFile(file: UploadFile, dir: string) {
+  private copyFile(file: UploadFile, dir: string) {
     const filePath = (file.originFileObj! as any).path
     const fileName = path.basename(filePath)
 
@@ -35,7 +35,14 @@ class UploadImageService {
     })
   }
 
+  public removeDir(patientId: string) {
+    const dir = `${this.rootDir}${patientId ? `/${patientId}` : ''}`
+
+    if (fs.existsSync(dir)) fs.rmdirSync(dir, { recursive: true })
+  }
+
   private prepareDir(patientId?: string) {
+    console.log(this.rootDir)
     const dir = `${this.rootDir}${patientId ? `/${patientId}` : ''}`
 
     if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
@@ -44,6 +51,6 @@ class UploadImageService {
   }
 }
 
-const uploadImageService = new UploadImageService()
+const imageService = new ImageService()
 
-export default uploadImageService
+export default imageService

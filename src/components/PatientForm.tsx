@@ -1,7 +1,7 @@
 import { PlusOutlined } from '@ant-design/icons'
 import { Form, Input, Modal, Upload, UploadFile } from 'antd'
 import TextArea from 'antd/lib/input/TextArea'
-import { Patient } from 'lib/db/schema/patient'
+import { Patient } from 'core/lib/db/schema/patient'
 import React from 'react'
 
 interface PatientFormProps {
@@ -23,7 +23,7 @@ const PatientForm: React.FC<PatientFormProps> = ({ onSubmit, onClose, visible })
 
   return (
     <Modal
-      title="Modal 1000px width"
+      title="Thêm bệnh nhân"
       centered
       visible={visible}
       onCancel={onClose}

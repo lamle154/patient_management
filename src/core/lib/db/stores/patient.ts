@@ -1,7 +1,8 @@
 import DataStore from 'nedb-promises'
 import Ajv, { ValidateFunction } from 'ajv'
 import patientSchema, { CreatedPatient, Patient } from '../schema/patient'
-import uploadImageService from 'lib/uploadImage'
+import uploadImageService from 'core/services/image'
+import imageService from 'core/services/image'
 
 class PatientStore {
   schemaValidator: ValidateFunction<Patient>
@@ -55,6 +56,8 @@ class PatientStore {
   async delete(_id: string): Promise<[Error | null]> {
     try {
       await this.db.remove({ _id }, { multi: false })
+      imageService.removeDir(_id)
+
       return [null]
     } catch (error: any) {
       return [error]

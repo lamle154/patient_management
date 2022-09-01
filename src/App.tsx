@@ -4,9 +4,10 @@ import type { ColumnsType } from 'antd/es/table'
 import Search from 'antd/lib/input/Search'
 import PatientForm from 'components/PatientForm'
 import ViewPatient from 'components/ViewPatient'
-import { CreatedPatient, Patient } from 'lib/db/schema/patient'
-import patientStore from 'lib/db/stores/patient'
-import uploadImageService from 'lib/uploadImage'
+import { CreatedPatient, Patient } from 'core/lib/db/schema/patient'
+import patientStore from 'core/lib/db/stores/patient'
+import uploadImageService from 'core/services/image'
+import { formatLocalDateTime } from 'core/utils/datetime'
 import { debounce, omit } from 'radash'
 import React from 'react'
 
@@ -102,7 +103,8 @@ function App() {
       {
         title: 'Ngày khám',
         dataIndex: 'createdAt',
-        key: 'createdAt'
+        key: 'createdAt',
+        render: (_, { createdAt }) => formatLocalDateTime(createdAt)
       },
       {
         title: '',

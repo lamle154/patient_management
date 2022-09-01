@@ -1,8 +1,8 @@
-import { Form, Input, Modal, Upload } from 'antd'
-import TextArea from 'antd/lib/input/TextArea'
-import { Patient } from 'lib/db/schema/patient'
-import React from 'react'
 import { EyeOutlined } from '@ant-design/icons'
+import { Form, Input, Modal } from 'antd'
+import TextArea from 'antd/lib/input/TextArea'
+import { Patient } from 'core/lib/db/schema/patient'
+import React from 'react'
 
 const fs: FSType = window.require('fs')
 const path: PathType = window.require('path')
@@ -14,7 +14,6 @@ interface ViewPatientProps {
 }
 
 const ViewPatient: React.FC<ViewPatientProps> = ({ onClose, visible, values }) => {
-  console.log(values)
   return (
     <Modal
       title={`Bệnh nhân: ${values.userName}`}
@@ -24,6 +23,7 @@ const ViewPatient: React.FC<ViewPatientProps> = ({ onClose, visible, values }) =
       cancelText="Huỷ"
       okText="Lưu"
       width="90%"
+      footer={null}
     >
       <Form name="patient" layout="horizontal" labelCol={{ span: 4 }} wrapperCol={{ span: 16 }} autoComplete="off">
         <Form.Item label="Tên">
