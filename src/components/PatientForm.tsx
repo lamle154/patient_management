@@ -74,7 +74,7 @@ const PatientForm: React.FC<PatientFormProps> = ({ onSubmit, onClose, visible })
           required
           rules={[{ required: true, message: 'Trường này là bắt buộc !' }]}
         >
-          <Upload listType="picture-card" beforeUpload={() => false}>
+          <Upload listType="picture-card" beforeUpload={() => false} accept="image/png, image/gif, image/jpeg">
             <div>
               <PlusOutlined />
               <div style={{ marginTop: 8 }}>Thêm ảnh</div>
