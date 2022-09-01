@@ -1,4 +1,5 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, dialog } = require('electron')
+const { autoUpdater } = require('electron-updater')
 
 const path = require('path')
 const isDev = require('electron-is-dev')
@@ -21,6 +22,8 @@ function createWindow() {
       ? 'http://localhost:3000'
       : `file://${path.join(__dirname, '../build/index.html')}`
   )
+
+  if (!isDev) autoUpdater.checkForUpdates()
 }
 
 app.on('ready', createWindow)
@@ -38,4 +41,30 @@ app.on('activate', function () {
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (BrowserWindow.getAllWindows().length === 0) createWindow()
+})
+
+autoUpdater.on('update-available', (_, releaseNotes, releaseName) => {
+  const dialogOpts = {
+    type: 'info',
+    buttons: ['Ok'],
+    title: 'Application Update',
+    message: process.platform === 'win32' ? releaseNotes : releaseName,
+    detail: 'A new version is being downloaded.'
+  }
+
+  dialog.showMessageBox(dialogOpts)
+})
+
+autoUpdater.on('update-downloaded', (_, releaseNotes, releaseName) => {
+  const dialogOpts = {
+    type: 'info',
+    buttons: ['Restart', 'Later'],
+    title: 'Application Update',
+    message: process.platform === 'win32' ? releaseNotes : releaseName,
+    detail: 'A new version has been downloaded. Restart the application to apply the updates'
+  }
+
+  dialog.showMessageBox(dialogOpts, (returnValue) => {
+    if (returnValue.response === 0) autoUpdater.quitAndInstall()
+  })
 })

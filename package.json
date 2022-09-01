@@ -4,15 +4,16 @@
   "private": true,
   "dependencies": {
     "@electron/remote": "^1.0.2",
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
+    "ajv": "^8.11.0",
+    "antd": "^4.22.8",
     "bootstrap": "^5.0.0-beta1",
     "electron-is-dev": "^1.2.0",
+    "electron-updater": "^5.2.1",
+    "nedb-promises": "^6.1.0",
+    "radash": "^7.1.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-scripts": "4.0.1",
-    "web-vitals": "^0.2.4"
+    "react-scripts": "4.0.1"
   },
   "main": "public/main.js",
   "homepage": "./",
@@ -36,6 +37,11 @@
     ],
     "directories": {
       "buildResources": "assets"
+    },
+    "win": {
+      "publish": [
+        "github"
+      ]
     }
   },
   "eslintConfig": {
@@ -57,11 +63,16 @@
     ]
   },
   "devDependencies": {
+    "@types/nedb": "^1.8.12",
+    "@types/node": "^18.7.14",
+    "@types/react": "^18.0.18",
+    "@types/react-dom": "^18.0.6",
     "concurrently": "^5.3.0",
     "cross-env": "^7.0.3",
     "electron": "^11.2.1",
-    "electron-builder": "^22.9.1",
+    "electron-builder": "^23.3.3",
     "prettier": "^2.2.1",
+    "typescript": "^4.8.2",
     "wait-on": "^5.2.1"
   }
 }
